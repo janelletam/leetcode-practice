@@ -155,6 +155,7 @@ class Solution {
 ```
 
 4. Group anagrams
+   
 **Time complexity**: `O(n * klog(k))` - where n = num of elements in list, k = average length of string
 (sorting cost)
 
@@ -186,6 +187,7 @@ class Solution {
 ```
 
 5. Container with most water
+   
 **Time complexity**: `O(n^2)` (too slow)
 ```
    class Solution {
@@ -262,6 +264,7 @@ class Solution {
 ```
 
 6. Copy graph
+   
 **Time complexity:**: `O(v + e)`
 - uses DFS
 ```
@@ -305,6 +308,7 @@ class Solution {
 ```
 
 7. Is graph bipartite?
+   
 **Time complexity:** `O(v + e`
 ```
 class Solution {

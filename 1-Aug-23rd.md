@@ -303,3 +303,37 @@ class Solution {
     }
 }
 ```
+
+7. Is graph bipartite?
+**Time complexity:** `O(v + e`
+```
+class Solution {
+    int[][] _graph;
+    int[] colours;
+
+    public boolean isBipartite(int[][] graph) {
+        _graph = graph;
+        colours = new int[_graph.length];
+
+        for (int i = 0; i < _graph.length; i++) {
+            if (colours[i] == 0 && !isValidColour(i, 1)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private boolean isValidColour(int node, int colour) {
+        if (colours[node] != 0) return colours[node] == colour;
+
+        colours[node] = colour;
+        for (int neighbour : _graph[node]) {
+            if (!isValidColour(neighbour, -colour))
+                return false;
+        }
+
+        return true;
+    }
+}
+```

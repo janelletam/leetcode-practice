@@ -184,3 +184,79 @@ class Solution {
     }
 }
 ```
+
+5. Container with most water
+**Time complexity**: `O(n^2)` (too slow)
+```
+   class Solution {
+    public int maxArea(int[] height) {
+        // Algorithm:
+        // Search the entire array (using pointer) for the first value (closest to the edge)
+        // that's greater than or equal to current value (bottleneck) OR just the bigggest
+        // value if no such value exists
+        // Then, calculate what the volume of the container is at that point
+        // 
+        // Iterate from all the values from the right <- going inwards to see if
+        // it creates a bigger container
+        // If not, the one identified is the biggest container
+        int maxVolume = 0;
+        for (int i = 0; i < height.length - 1; i++) {
+            int[] maxInfo = findMaxNumber(i, height);
+            int maxValue = maxInfo[0];
+            int maxIndex = maxInfo[1];
+            maxVolume = Math.max(maxVolume, calculateVolume(height[i], height[maxIndex], i, maxIndex));
+            int right = height.length - 1;
+            while (right > maxIndex) {
+                int volume = calculateVolume(height[i], height[right], i, right);
+                if (volume > maxVolume) {
+                    maxVolume = volume;
+                } 
+                right--;
+            }
+        }
+
+        return maxVolume;
+    }
+
+    private int[] findMaxNumber(int start, int[] list) {
+        int maxIndex = list.length - 1;
+        int maxValue = -1;
+        for (int i = list.length - 1; i > start; i--) {
+            if (list[i] > maxValue) {
+                maxValue = list[i];
+                maxIndex = i;
+            }
+        }
+        return new int[] {maxValue, maxIndex};
+    }
+
+    private int calculateVolume(int height_1, int height_2, int index_1, int index_2) {
+        return Math.min(height_1, height_2) * (index_2 - index_1);
+    }
+}
+```
+
+Better time complexity (using two pointer approach): `O(n)`
+```
+class Solution {
+    public int maxArea(int[] height) {
+        int maxVolume = 0;
+        int left = 0, right = height.length - 1;
+
+        while (left < right) {
+            maxVolume = Math.max(maxVolume, calculateVolume(height[left], height[right], left, right));
+            if (height[left] < height[right]) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+
+        return maxVolume;
+    }
+
+    private int calculateVolume(int height_1, int height_2, int index_1, int index_2) {
+        return Math.min(height_1, height_2) * (index_2 - index_1);
+    }
+}
+```

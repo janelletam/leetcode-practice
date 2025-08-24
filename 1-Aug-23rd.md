@@ -1,6 +1,7 @@
 # Aug 23rd Practice Problems
 ## Notes:
 - To calculate length of substring, use `right - left + 1`
+- Be careful with instantiating list (abstract) vs. arraylist
 
 ---
 ## Problems:
@@ -146,6 +147,37 @@ class Solution {
                     right--;
                 }
             }
+        }
+
+        return result;
+    }
+}
+```
+
+4. Group anagrams
+**Time complexity**: `O(n * klog(k))` - where n = num of elements in list, k = average length of string
+(sorting cost)
+
+```
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        // Start by sorting each string (turn into a char array)
+        // Add to hashmap as key - the value is the original string 
+
+        HashMap<String, List<String>> map = new HashMap<>();
+        List<List<String>> result = new ArrayList<List<String>>();
+        for (String str : strs) {
+            char[] sortedStr = str.toCharArray();
+            Arrays.sort(sortedStr);
+            String sortedStrKey = new String(sortedStr);
+
+            List<String> anagrams = map.getOrDefault(sortedStrKey, new ArrayList<>());
+            anagrams.add(str);
+            map.put(sortedStrKey, anagrams);
+        }
+
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            result.add(entry.getValue());
         }
 
         return result;

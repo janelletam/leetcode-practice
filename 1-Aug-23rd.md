@@ -260,3 +260,46 @@ class Solution {
     }
 }
 ```
+
+6. Copy graph
+**Time complexity:**: `O(v + e)`
+- uses DFS
+```
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public List<Node> neighbors;
+    public Node() {
+        val = 0;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val) {
+        val = _val;
+        neighbors = new ArrayList<Node>();
+    }
+    public Node(int _val, ArrayList<Node> _neighbors) {
+        val = _val;
+        neighbors = _neighbors;
+    }
+}
+*/
+
+class Solution {
+    HashMap<Integer, Node> copiedNodes = new HashMap<>();
+
+    public Node cloneGraph(Node node) {
+        if (node == null) return null;
+        if (copiedNodes.containsKey(node.val)) return copiedNodes.get(node.val); // return existing copy
+
+        Node copiedNode = new Node(node.val);
+        copiedNodes.put(node.val, copiedNode);
+
+        for (Node neighbor : node.neighbors) {
+            copiedNode.neighbors.add(cloneGraph(neighbor));
+        }
+
+        return copiedNode;
+    }
+}
+```

@@ -1,5 +1,8 @@
 # Aug 24th Practice Problems
+## Notes
 
+---
+## Problems
 1. Search rotated sorted array
 
 **Time complexity:** `O(logn)`

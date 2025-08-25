@@ -1,5 +1,6 @@
 # Aug 24th Practice Problems
 ## Notes
+- Syntax: HashSet add is `set.add(element)` vs. HashMap add is `map.put(key, value)`
 
 ---
 ## Problems

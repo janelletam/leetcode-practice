@@ -151,3 +151,88 @@ class Solution {
     }
 }
 ```
+
+4. Roman to int
+
+First solution: not optimal.. uses substring
+```
+class Solution {
+    public int romanToInt(String s) {
+        int value = 0;
+
+        HashMap<String, Integer> map = createRomanToIntMap();
+
+        for (int i = 0; i < s.length(); i++) {
+            if (i + 1 < s.length()) {
+                String twoChars = s.substring(i, i + 2);
+                if (map.containsKey(twoChars)) {
+                    value += map.get(twoChars);
+                    i++; // skip over next char
+                    continue;
+                }
+            }
+
+            value += map.get(String.valueOf(s.charAt(i)));
+        }
+
+        return value;
+    }
+
+    private HashMap<String, Integer> createRomanToIntMap() {
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("I", 1);
+        map.put("V", 5);
+        map.put("X", 10);
+        map.put("L", 50);
+        map.put("C", 100);
+        map.put("D", 500);
+        map.put("M", 1000);
+        map.put("IV", 4);
+        map.put("IX", 9);
+        map.put("XL", 40);
+        map.put("XC", 90);
+        map.put("CD", 400);
+        map.put("CM", 900);
+
+        return map;
+    }
+}
+```
+
+**Better time complexity:** `O(n)`
+
+```class Solution {
+    public int romanToInt(String s) {
+        int value = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            int curr = convertCharToInt(s.charAt(i));
+            if (i < s.length() - 1) {
+                int next = convertCharToInt(s.charAt(i + 1));
+                if (curr < next) {
+                    value += next - curr;
+                    i++; // skip next value as well
+                    continue;
+                }
+            }
+
+            value += curr;
+        }
+
+        return value;
+    }
+
+    private int convertCharToInt(char c) {
+        switch (c) {
+            case 'I': return 1;
+            case 'V': return 5;
+            case 'X': return 10;
+            case 'L': return 50;
+            case 'C': return 100;
+            case 'D': return 500;
+            case 'M': return 1000;
+            default: return -1; // invalid
+        }
+    }
+}
+```

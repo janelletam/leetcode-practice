@@ -72,3 +72,38 @@ class Solution {
     }
 }
 ```
+
+2. Longest consecutive sequence
+   
+**Time complexity**: Because of the `continue` line, we visit each element in the set at most once
+
+```
+class Solution {
+    public int longestConsecutive(int[] nums) {
+        // convert to hashset
+        // for each number, check to see if its n -1 value is in the set -> if so, skip
+        // if not, check to see if there exists a sequence
+        HashSet<Integer> set = new HashSet<>();
+        int maxSequenceLength = 0;
+
+        for (int num : nums) {
+            set.add(num);
+        }
+
+        for (int num : set) {
+            if (set.contains(num - 1)) continue;
+            int currSequenceLength = 1;
+            int curr = num;
+
+            while (set.contains(curr + 1)) {
+                currSequenceLength++;
+                curr++;
+            }
+
+            maxSequenceLength = Math.max(maxSequenceLength, currSequenceLength);
+        }
+
+        return maxSequenceLength;
+    }
+}
+```

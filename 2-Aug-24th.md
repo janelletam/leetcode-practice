@@ -1,6 +1,9 @@
 # Aug 24th Practice Problems
 ## Notes
 - Syntax: HashSet add is `set.add(element)` vs. HashMap add is `map.put(key, value)`
+- When calculate mid-index based on start/end, don't forget to ADD the start value to whatever the mid-index calculation is
+```int mid = START + (end - start) / 2;```
+- If problem requires O(logn) time, usually involves halving the solution in some way to minimize the size of the problem
 
 ---
 ## Problems
@@ -105,6 +108,46 @@ class Solution {
         }
 
         return maxSequenceLength;
+    }
+}
+```
+
+3. Find peak element
+
+**Time complexity:** O(logn)
+```
+class Solution {
+    public int findPeakElement(int[] nums) {
+        int left = 0;
+        int right = nums.length - 1;
+        int peak = -1;
+       
+        while (left <= right) {
+            // base checks
+            if (right == left) return right; // only 1 element left 
+
+            if (right - left == 1) {
+                if (nums[right] > nums[left]) return right;
+                else return left;
+            }
+
+            int mid = left + (right - left) / 2;
+
+            // check around the mid point
+            if (nums[mid - 1] < nums[mid] && nums[mid] > nums[mid + 1]) {
+                return mid;
+            }
+
+            // at least 1 peak mnust exist to the left
+            if (nums[mid - 1] > nums[mid]) {
+                right = mid - 1;
+            // at least 1 peak must exist to the right
+            } else {
+                left = mid + 1;
+            }
+        }
+
+        return peak;
     }
 }
 ```

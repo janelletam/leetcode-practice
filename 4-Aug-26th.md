@@ -5,6 +5,8 @@
 - Put debugging statements BEFORE I change the variables so I can see the current state
 - Consider base cases (e.g. inputs are null) and do early return
 - Convert list to HashSet by passing it in constructor ->  ```HashSet<String> set = new HashSet<>(list);```
+- Can simplify code by combining if statement and increment/decrement: ```if (tracker[t.charAt(i)]-- <= 0)```
+- 128 ASCII Characters
 
 ---
 ## Problems
@@ -140,5 +142,33 @@ class Solution {
         System.out.println("Final start: " + startPointer);
         return startPointer == s.length();
     }
+}
+```
+
+4. Is Anagram?
+
+**Time complexity:** O(n)
+
+```
+class Solution {
+  public boolean isAnagram(String s, String t) {
+    // check length first
+    if (s.length() != t.length()) return false;
+
+    // store hashmap with char frequencies.. 
+    // alternatively, use int array [128], representing frequency
+    // if -1, then return false
+    int[] tracker = new int[128];
+    for (int i = 0; i < s.length(); i++) {
+      tracker[s.charAt(i)]++;
+    }
+
+    for (int i = 0; i < t.length(); i++) {
+      if (tracker[t.charAt(i)]-- <= 0)
+        return false;
+    }
+
+    return true;
+  }
 }
 ```

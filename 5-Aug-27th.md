@@ -1,6 +1,6 @@
-# [Date] Practice Problems
+# Aug 27th Practice Problems
 ## Notes
-- 
+- Stringbuilder..
 
 ---
 ## Problems
@@ -38,12 +38,47 @@ class Solution {
 }
 ```
 
-2. 
+2. Is palindrome (incomplete)
 
 **Time complexity:** ``
 
 ```
+class Solution {
+    public boolean isPalindrome(String s) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char curr = s.charAt(i);
+            if (Character.isLetterOrDigit(curr)) {
+                sb.append(Character.toLowerCase(curr));
+            }
+        }
 
+        String copy = sb.toString();
+        if (copy.length() == 0) return true;
+
+        if (copy.length() % 2 == 0) {
+            int leftPointer = 0;
+            int rightPointer = copy.length() - 1;
+
+            while (rightPointer < leftPointer) {
+                if (copy.charAt(rightPointer) != copy.charAt(leftPointer))
+                    return false; // not palindrome
+                leftPointer++;
+                rightPointer--;
+            }
+        } else {
+            int center = copy.length() / 2;
+            int counter = 0;
+            while ((center - counter > 0) && (center + counter < copy.length() - 1)) {
+                if (copy.charAt(center - counter) != copy.charAt(center + counter))
+                    return false;
+                counter++;
+            }
+        }
+
+        return true;
+    }
+}
 ```
 
 3. 

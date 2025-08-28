@@ -120,10 +120,56 @@ class Solution {
 }
 ```
 
-3. 
+3. Max path through binary tree
 
-**Time complexity:** ``
+Uses recursion, I needed help for this... But basically, think: what do I need for recursion to work? What result am I actually checking? 
+
+**Intuition behind solution:** In this case, in order for recursion to work, I have to return the max value when NOT SPLITTING but including the root parameter in dfs(root). But the actual result that I'm finding - I do that by checking to see if splitting at the root node in question gives the biggest result.
+
+**Time complexity:** `O(n)`
 
 ```
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int result;
 
+    public int maxPathSum(TreeNode root) {
+        // use a dfs based on the root
+        // dfs: returns what is the max value of the subtrees
+        // (path includes whatever the root is)
+        // update result based on: what's the max value WITH spliting
+        result = root.val;
+        dfs(root);
+        return result;
+    }
+
+    // return max path WITHOUT split
+    private int dfs(TreeNode root) {
+        if (root == null) return 0; // empty
+
+        int leftMax = Math.max(0, dfs(root.left)); // don't include if subtree is negative
+        int rightMax = Math.max(0, dfs(root.right));
+
+        // compute WITH split
+        result = Math.max(result, root.val + leftMax + rightMax);
+
+        // intuition: can only split once, so therefore in order
+        // for recursion to work, I have to return the actual max without splitting
+        return root.val + Math.max(leftMax, rightMax);
+    }
+}
 ```

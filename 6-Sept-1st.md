@@ -140,3 +140,31 @@ class Solution {
     }
 }
 ```
+4. Num decodings
+
+Time complexity: `O(n)`
+```
+class Solution {
+    public int numDecodings(String s) {
+        char start = '0';
+
+        // base cases
+        if (s == null || s.isEmpty() || s.charAt(0) == start) return 0;
+
+        // dp[i] stores number of possible encodings at that point
+        int[] dp = new int[s.length() + 1];
+        dp[0] = 1; // empty string
+        dp[1] = 1; // string with 1 char
+
+        for (int i = 2; i <= s.length(); i++) {
+            int oneDigit = s.charAt(i - 1) - '0';
+            int twoDigits = Integer.parseInt(s.substring(i - 2, i));
+
+            if (oneDigit != 0) dp[i] += dp[i - 1];
+            if (twoDigits >= 10 && twoDigits <= 26) dp[i] += dp[i - 2];
+        }
+
+        return dp[s.length()];
+    }
+}
+```

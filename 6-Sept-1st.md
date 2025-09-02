@@ -98,10 +98,45 @@ class Solution {
 }
 ```
 
-3. 
+3. House robber
 
-**Time complexity:** ``
+**Time complexity:** `O(n)`
 
 ```
+class Solution {
+    public int rob(int[] nums) {
+        if (nums.length == 1) return nums[0];
+        if (nums.length == 2) return Math.max(nums[0], nums[1]); // base cases
 
+        return Math.max(robLinear(nums, 1, nums.length - 1), robLinear(nums, 0, nums.length - 2));        
+    }
+
+    private int robLinear(int[] nums, int start, int end) {
+        // use dynamic programming where
+        // dp[i][0] = the max amount you can rob at this point excluding house i
+        // dp[i][1] = the max amount you can rob at this point including house i
+        // need to account for circular list
+
+        int[][] dp = new int[nums.length][2];
+        int maxResult = 0;
+
+        for (int i = start; i <= end; i++) {
+            // exclude house i
+            if (i - 1 >= 0) {
+                dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1]);
+            }
+            maxResult = Math.max(maxResult, dp[i][0]);
+            
+            // include house i
+            int includeResult = 0;
+            if (i - 2 >= 0) {
+                includeResult = Math.max(dp[i - 2][0], dp[i - 2][1]);
+            }
+            dp[i][1] = includeResult + nums[i];
+            maxResult = Math.max(maxResult, dp[i][1]);
+        }
+
+        return maxResult;
+    }
+}
 ```

@@ -1,10 +1,10 @@
 # Sept 1st Practice Problems
 ## Notes
-- 
+- Read questions properly and see what I'm allowed to use!!
 
 ---
 ## Problems
-1. Product of array except itself
+1. Product of array except itself (WITH division)
 
 **Time complexity:** `O(n)`
 
@@ -56,12 +56,46 @@ class Solution {
 }
 ```
 
-2. 
+2. Product of array except itself (WITHOUT division)
 
-**Time complexity:** ``
+**Time complexity:** `O(n)`
 
 ```
+class Solution {
+    public int[] productExceptSelf(int[] nums) {
+        if (nums.length == 0) return nums; // empty array
 
+        int[] prefix = new int[nums.length];
+        int[] postfix = new int[nums.length];
+
+        // Create prefix array
+        prefix[0] = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            prefix[i] = prefix[i - 1] * nums[i];
+        }
+
+        // Create postfix array
+        postfix[nums.length - 1] = nums[nums.length - 1];
+        for (int i = nums.length - 2; i >= 0; i--) {
+            postfix[i] = postfix[i + 1] * nums[i];
+        }
+
+        // Compute product
+        for (int i = 0; i < nums.length; i++) {
+            int product = 1;
+            if (i - 1 >= 0) {
+                product *= prefix[i - 1];
+            }
+            if (i + 1 < nums.length) {
+                product *= postfix[i + 1];
+            }
+
+            nums[i] = product;
+        }
+
+        return nums;
+    }
+}
 ```
 
 3. 
